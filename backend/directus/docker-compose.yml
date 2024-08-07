@@ -3,7 +3,7 @@ services:
   directus:
     image: directus/directus:10.13.1
     ports:
-      - 3000:3000
+      - 8055:8055
     volumes:
       - ./database:/directus/database
       - ./uploads:/directus/uploads
@@ -15,6 +15,5 @@ services:
       DB_CLIENT: "sqlite3"
       DB_FILENAME: "/directus/database/data.db"
       WEBSOCKETS_ENABLED: "true"
-      PORT: "3000"
       CORS_ENABLED: "true"
       CORS_ORIGIN: "*"

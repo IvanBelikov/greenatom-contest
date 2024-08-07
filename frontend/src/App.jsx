@@ -1,44 +1,34 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
-import "./App.css";
+import Gallery from '@/components/Gallery'
+import ImageViewer from '@/components/ImageViewer'
 
-import axios from "axios";
+import { observer } from 'mobx-react-lite'
+import { RootStoreContext } from './rootStoreContext'
+import RootStore from './stores/rootStore'
+import InfiniteScroll from 'react-infinite-scroll-component'
 
-function App() {
-  const [count, setCount] = useState(0);
+import Spin from '@/components/UI/Spin'
 
-  console.log(123);
+export default observer(function App() {
+  const { gallery } = new RootStore()
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <RootStoreContext.Provider value={new RootStore()}>
+      <div className="my-10 flex flex-col items-center justify-center">
+        <h1 className="text-3xl">Галерея</h1>
+        <Gallery />
+        <ImageViewer />
+        <InfiniteScroll
+          dataLength={gallery.images.length}
+          next={() => gallery.getMoreGallery()}
+          hasMore={gallery.loadMore}
+          loader={<h1>Loading...</h1>}
+          endMessage={
+            <p style={{ textAlign: 'center' }}>
+              <b>Yay! You have seen it all</b>
+            </p>
+          }
+        />
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  );
-}
-
-function test() {
-  axios
-    .get("http://localhost:3000/items/gallery")
-    .then((response) => console.log(response.data.data));
-}
-export default App;
+    </RootStoreContext.Provider>
+  )
+})
