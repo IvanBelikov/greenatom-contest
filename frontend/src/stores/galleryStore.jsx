@@ -21,6 +21,10 @@ class GalleryStore {
       runInAction(() => {
         this.images = response.data.data
         this.isLoading = false
+
+        if (this.limit > this.images.length) {
+          this.loadMore = false
+        }
       })
     } catch (e) {
       console.error('galleryStore fetchMoreGallery', e)

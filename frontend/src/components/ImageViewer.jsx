@@ -4,10 +4,13 @@ import useScrollBlock from '@/hooks/useScrollBlock'
 import { useEffect } from 'react'
 import { observer } from 'mobx-react-lite'
 import { useStores } from '@/rootStoreContext'
+import { useNavigate, useParams } from 'react-router-dom'
 
 export default observer(function ImageViewer() {
   const [blockScroll, allowScroll] = useScrollBlock()
+  const navigate = useNavigate()
   const { imageViewer } = useStores()
+  const { image } = useParams()
 
   function handleClose() {
     allowScroll()
@@ -16,10 +19,21 @@ export default observer(function ImageViewer() {
     imageViewer.visible = false
   }
 
-  useEffect(
-    () => (imageViewer.isVisible ? blockScroll() : allowScroll()),
-    [imageViewer.isVisible]
-  )
+  useEffect(() => {
+    if (image) {
+      imageViewer.image = image
+      imageViewer.visible = true
+    }
+  }, [image])
+
+  useEffect(() => {
+    if (imageViewer.isVisible) {
+      blockScroll()
+    } else {
+      allowScroll()
+      navigate('/')
+    }
+  }, [imageViewer.isVisible])
 
   if (imageViewer.isVisible) {
     return (

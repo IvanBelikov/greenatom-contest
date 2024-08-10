@@ -1,25 +1,20 @@
 import { useState } from 'react'
 import { assetsUrl } from '@/config'
-import { useStores } from '@/rootStoreContext'
 
 import { observer } from 'mobx-react-lite'
+import { useNavigate } from 'react-router-dom'
 
 export default observer(function GalleryItem({ image }) {
   const [isHideInfo, setIsHideInfo] = useState(true)
-  const { imageViewer } = useStores()
-
-  function setImageViewer(image) {
-    imageViewer.image = image
-    imageViewer.visible = true
-  }
+  const navigate = useNavigate()
 
   return (
     <div
       onMouseEnter={() => setIsHideInfo(false)}
       onMouseLeave={() => setIsHideInfo(true)}
-      onClick={() => setImageViewer(image.image)}
+      onClick={() => navigate(`/${image.image}`)}
       className={
-        'relative block h-full w-full rounded-sm ' +
+        'relative block h-full max-h-[800px] w-full max-w-[800px] rounded-sm ' +
         (image.isLarge ? 'col-span-2 row-span-2' : 'col-span-auto')
       }
     >

@@ -20,6 +20,10 @@ export default observer(function Gallery() {
     )
   }
 
+  if (gallery.images.length === 0) {
+    return <h1>Галерея сейчас пуста!</h1>
+  }
+
   return (
     <div className="container mx-auto grid grid-flow-dense auto-rows-max grid-cols-gallery gap-5 pt-10">
       {gallery.images.map((image) => {
