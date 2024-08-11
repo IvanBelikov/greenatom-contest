@@ -25,5 +25,6 @@ Backebnd будет доступен по http://localhost:8055
 2. npm install
 3. npm run dev
 
+# Скриншоты
 ![image](https://github.com/user-attachments/assets/484375db-fa43-48cd-8c4e-53c11332be90)
 ![image](https://github.com/user-attachments/assets/c488e168-ab26-405c-974e-b4378eade2b3)
