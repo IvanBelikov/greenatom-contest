@@ -10,7 +10,7 @@ export default observer(function MainPage() {
   const { gallery } = new RootStore()
 
   return (
-    <div className="my-10 flex flex-col items-center justify-center">
+    <div className="my-10 flex flex-col items-center justify-center px-5 py-5">
       <h1 className="text-3xl">Галерея</h1>
       <Gallery />
       <ImageViewer />
